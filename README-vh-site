@@ -1,0 +1,61 @@
+mysql 
+user: root
+passwd: termin
+
+user: walery
+passwd: termin
+
+define('DB_USERNAME', 'u_cubyshop');
+define('DB_PASSWORD', 'ORTNYx9i');
+//--- view home
+generated models/Device.php
+
+http://vh.cuby.net/index.php?r=login/device/create
+http://vh.cuby.net/index.php?r=login/user/create
+
+http://vh.cuby.net/index.php?r=view/user
+
+//-------------
+	    $msg = var_export($_POST,true) ;
+	    Yii::log($msg, 'warning');
+	    Yii::getLogger()->flush(true);
+	    
+//---------------
+page 16 in blog.pdf
+
+//-----------
+ User::__set_state(array(
+   '_new' => false,
+   '_attributes' => 
+	  	array (
+	  	  'id' => '2',
+	 	  'username' => 'admin',
+		  'email' => 'walery@cuby.net',
+		  'password' => '21232f297a57a5a743894a0e4a801fc3',
+		  'role' => 'admin',
+		  'create_time' => '2021-04-12 18:42:47',
+	  	),
+   '_related' => 
+  array (
+  ),
+   '_c' => NULL,
+   '_pk' => '2',
+   '_alias' => 't',
+   '_errors' => 
+  array (
+  ),
+   '_validators' => NULL,
+   '_scenario' => 'update',
+   '_e' => NULL,
+   '_m' => NULL,
+))
+//------------ PASSWD
+$pass = 'admin';
+$salt = substr(str_replace('+', '.', base64_encode(pack('N4', mt_rand(), mt_rand(), mt_rand(), mt_rand()))), 0, 22);
+$param = '$'.implode('$',array("2y","07",$salt));
+$pasenc = crypt($pass,$param);
+/* $pasenc store as password when create user password.
+
+
+
+EOF

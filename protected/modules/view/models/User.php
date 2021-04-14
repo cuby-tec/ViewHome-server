@@ -1,14 +1,15 @@
 <?php
 
 /**
- * This is the model class for table "vh_2021.user".
+ * This is the model class for table "user".
  *
- * The followings are the available columns in table 'vh_2021.user':
+ * The followings are the available columns in table 'user':
+ * @property integer $id
  * @property string $username
  * @property string $email
  * @property string $password
+ * @property string $role
  * @property string $create_time
- * @property integer $id
  */
 class User extends CActiveRecord
 {
@@ -17,7 +18,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'vh_2021.user';
+		return 'user';
 	}
 
 	/**
@@ -31,10 +32,11 @@ class User extends CActiveRecord
 			array('username, password', 'required'),
 			array('username', 'length', 'max'=>32),
 			array('email, password', 'length', 'max'=>255),
+			array('role', 'length', 'max'=>45),
 			array('create_time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('username, email, password, create_time, id', 'safe', 'on'=>'search'),
+			array('id, username, email, password, role, create_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,11 +57,12 @@ class User extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+			'id' => 'ID',
 			'username' => 'Username',
 			'email' => 'Email',
 			'password' => 'Password',
+			'role' => 'Role',
 			'create_time' => 'Create Time',
-			'id' => 'ID',
 		);
 	}
 
@@ -81,11 +84,12 @@ class User extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->compare('id',$this->id);
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('password',$this->password,true);
+		$criteria->compare('role',$this->role,true);
 		$criteria->compare('create_time',$this->create_time,true);
-		$criteria->compare('id',$this->id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -101,5 +105,15 @@ class User extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	public function validatePassword($password)
+	{
+	    return CPasswordHelper::verifyPassword($password, $this->password);
+	}
+	
+	public function hashPassword($password) {
+	    return CPasswordHelper::hashPassword($password);
+	    
 	}
 }

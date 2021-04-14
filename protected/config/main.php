@@ -48,9 +48,11 @@ return array(
 			),
 		),
 		*/
+	    /*
 		'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		),
+		*/
 		// uncomment the following to use a MySQL database
 		//
 		'db'=>array(
@@ -60,6 +62,10 @@ return array(
 			'password' => 'termin',
 			'charset' => 'utf8',
 		),
+	    'authManager'=>array(
+	        'class'=>'CDbAuthManager',
+	        'connectionID'=>'db',
+	    ),
 		//
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
