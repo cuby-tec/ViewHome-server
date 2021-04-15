@@ -110,18 +110,46 @@ class SiteController extends Controller
             // validate user input and redirect to the previous page if valid
             if($model->validate()){
                 // 	            $this->redirect(Yii::app()->user->returnUrl);
-                $this->redirect('index.php?r=view/site');
-                $msg = var_export($model,true) ;
-                Yii::log($msg, 'warning');
-                Yii::getLogger()->flush(true);
+//                 $msg = var_export($model,true) ;
+//                 Yii::log($msg, 'warning');
+//                 Yii::getLogger()->flush(true);
+               if( $this->_store($model))
+                    $this->redirect('index.php?r=view/site');
             }
             
         }
         
-        
-        
 	    $this->render('register',array('model'=>$model));
 	    
+	}
+	
+	/**
+	 * Store registration user data in database.
+	 * @model of type RegisterForm.
+	 */
+	protected function _store(RegisterForm $model) {
+	    /* 'username' => 'asdf',
+	     * 'password' => '123',
+	     * 'email' => 'asdfqweeqsdasdf@mail.ru'
+	     */
+	    $store = new User();
+	    $store->username = $model->username;
+	    $store->email = $model->email;
+	    $store->password = $this->criptPassword($model->password);
+
+// 	    $msg = var_export($store,true) ;
+// 	    Yii::log($msg, 'warning');
+// 	    Yii::getLogger()->flush(true);
+        return ($store->save(FALSE,array('username','password','email')));
+            
+	    
+	}
+	
+	protected function criptPassword(string $pass) {
+	    $salt = substr(str_replace('+', '.', base64_encode(pack('N4', mt_rand(), mt_rand(), mt_rand(), mt_rand()))), 0, 22);
+	    $param = '$'.implode('$',array("2y","07",$salt));
+	    $pasenc = crypt($pass,$param);
+	    return ($pasenc);
 	}
 	
 }

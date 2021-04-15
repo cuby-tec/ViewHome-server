@@ -21,7 +21,7 @@ class RegisterForm extends CFormModel
             // username, password, email are required
             array('username, email, password', 'required'),
             // email has to be a valid email address
-            array('email', 'email'),
+            array('email', 'email','checkMX'=>true),
             // verifyCode needs to be entered correctly
             array('verifyCode', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements()),
         );
