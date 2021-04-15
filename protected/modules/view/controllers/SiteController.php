@@ -13,6 +13,26 @@ class SiteController extends Controller
         $this->layout = 'column1';
     }
     
+    /**
+     * Declares class-based actions.
+     */
+    public function actions()
+    {
+        return array(
+            // captcha action renders the CAPTCHA image displayed on the contact page
+            'captcha'=>array(
+                'class'=>'CCaptchaAction',
+                'backColor'=>0xFFFFFF,
+            ),
+            // page action renders "static" pages stored under 'protected/views/site/pages'
+            // They can be accessed via: index.php?r=site/page&view=FileName
+            'page'=>array(
+                'class'=>'CViewAction',
+            ),
+        );
+    }
+    
+    
     
 	public function actionIndex()
 	{
@@ -21,6 +41,21 @@ class SiteController extends Controller
 // 	    $this->redirect('index.php?r=view/site/login');
 // 	    $this->render('login');
 	}
+
+	/**
+	 * This is the action to handle external exceptions.
+	 */
+	public function actionError()
+	{
+	    if($error=Yii::app()->errorHandler->error)
+	    {
+	        if(Yii::app()->request->isAjaxRequest)
+	            echo $error['message'];
+	            else
+	                $this->render('error', $error);
+	    }
+	}
+	
 	
 	/**
 	 * Displays the login page
@@ -64,8 +99,27 @@ class SiteController extends Controller
 	 * Displays the register page
 	 */
 	public function actionRegister() {
-	    $model = new User();
+// 	    $model = new User();
+        $model = new RegisterForm();
 	    
+        
+        // collect user input data
+        if(isset($_POST['RegisterForm']))
+        { 
+            $model->attributes=$_POST['RegisterForm'];
+            // validate user input and redirect to the previous page if valid
+            if($model->validate()){
+                // 	            $this->redirect(Yii::app()->user->returnUrl);
+                $this->redirect('index.php?r=view/site');
+                $msg = var_export($model,true) ;
+                Yii::log($msg, 'warning');
+                Yii::getLogger()->flush(true);
+            }
+            
+        }
+        
+        
+        
 	    $this->render('register',array('model'=>$model));
 	    
 	}

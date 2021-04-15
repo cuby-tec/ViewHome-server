@@ -10,6 +10,7 @@ $this->breadcrumbs=array(
 ?>
 
 <h1>Login</h1>
+<h2> <?php  echo CHtml::link('Register', array('/view/site/register')); ?> </h2>
 
 <p>Please fill out the following form with your login credentials:</p>
 
