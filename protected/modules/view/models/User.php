@@ -24,6 +24,7 @@ class User extends CActiveRecord
 	/**
 	 * @return array validation rules for model attributes.
 	 */
+	//TODOH Check is USERNAME already exist in database.
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
@@ -34,12 +35,27 @@ class User extends CActiveRecord
 			array('email, password', 'length', 'max'=>255),
 			array('role', 'length', 'max'=>45),
 			array('create_time', 'safe'),
+// 		    array('username','_uniqueName'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, username, email, password, role, create_time', 'safe', 'on'=>'search'),
 		);
 	}
-
+	
+	protected  function _uniqueName($attribute,$params) 
+	{
+// 	    $model = new User();
+// 	    $username = $this->username;
+        $msg = var_export($attribute, true);
+        Yii::log($msg, 'warning');
+        Yii::getLogger()->flush(true);
+	    $user = User::model()->find('username=?',array($attribute));
+//         $user = $model->find('username=?',array($attribute));
+	    if($user != NULL)
+	        $this->errorCode = self::ERROR_USERNAME_INVALID;
+	        
+	}
+	
 	/**
 	 * @return array relational rules.
 	 */

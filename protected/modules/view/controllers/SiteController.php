@@ -113,8 +113,8 @@ class SiteController extends Controller
 //                 $msg = var_export($model,true) ;
 //                 Yii::log($msg, 'warning');
 //                 Yii::getLogger()->flush(true);
-               if( $this->_store($model))
-                    $this->redirect('index.php?r=view/site');
+//                if( $this->_store($model))
+//                     $this->redirect('index.php?r=view/site');
             }
             
         }
@@ -126,6 +126,7 @@ class SiteController extends Controller
 	/**
 	 * Store registration user data in database.
 	 * @model of type RegisterForm.
+	 * value "role"@"model" is "user" by default.
 	 */
 	protected function _store(RegisterForm $model) {
 	    /* 'username' => 'asdf',
@@ -137,7 +138,7 @@ class SiteController extends Controller
 	    $store->email = $model->email;
 	    $store->password = $this->criptPassword($model->password);
 
-// 	    $msg = var_export($store,true) ;
+// 	    $msg = var_export($model->username,true) ;
 // 	    Yii::log($msg, 'warning');
 // 	    Yii::getLogger()->flush(true);
         return ($store->save(FALSE,array('username','password','email')));
