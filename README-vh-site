@@ -56,6 +56,53 @@ $param = '$'.implode('$',array("2y","07",$salt));
 $pasenc = crypt($pass,$param);
 /* $pasenc store as password when create user password.
 
+//------------------ 
+ protected/config/main.php : (define the session timeout)
+
+
+$sessionTimeout = 5; // 5 secondes
+
+
+return array(
+
+	'params'=>require(dirname(__FILE__).'/params.php'),
+
+	'components'=>array(
+
+		'session' => array(
+
+			'class' => 'CDbHttpSession',
+
+			'timeout' => $sessionTimeout,
+
+		),
+
+	),
+
+);
+
+protected/config/params.php :
+
+
+// this contains the application parameters that can be maintained via GUI
+
+return array(
+
+	'session_timeout'=> $sessionTimeout,
+
+);
+//-------------------------
+ loginUrl @ CWebUser
+
+'components'=>array(
+
+    'user'=>array(
+
+        'loginUrl'=>array('accounts/login'),
+
+        'allowAutoLogin'=>true,
+
+    ),
 
 
 EOF
