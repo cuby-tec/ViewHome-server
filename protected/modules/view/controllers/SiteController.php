@@ -63,6 +63,8 @@ class SiteController extends Controller
 	public function actionLogin()
 	{
 	    $model=new LoginForm;
+// 	    $redirect = 'index.php?r=view/site';
+	    $redirect = 'index.php?r=view/device';
 
 	    // collect user input data
 	    if(isset($_POST['LoginForm']))
@@ -71,10 +73,7 @@ class SiteController extends Controller
 	        // validate user input and redirect to the previous page if valid
 	        if($model->validate() && $model->login()){
 // 	            $this->redirect(Yii::app()->user->returnUrl);
-	            $this->redirect('index.php?r=view/site');
- 	            $msg = var_export(Yii::app()->user->returnUrl,true) ;
- 	            Yii::log($msg, 'warning');
- 	            Yii::getLogger()->flush(true);
+	            $this->redirect($redirect);
 	        }
 	    }
 
@@ -101,7 +100,8 @@ class SiteController extends Controller
 	public function actionRegister() {
 // 	    $model = new User();
         $model = new RegisterForm();
-	    
+// 	    $redirect = 'index.php?r=view/site';
+        $redirect = 'index.php?r=view/device';
         
         // collect user input data
         if(isset($_POST['RegisterForm']))
@@ -110,11 +110,8 @@ class SiteController extends Controller
             // validate user input and redirect to the previous page if valid
             if($model->validate()){
                 // 	            $this->redirect(Yii::app()->user->returnUrl);
-//                 $msg = var_export($model,true) ;
-//                 Yii::log($msg, 'warning');
-//                 Yii::getLogger()->flush(true);
-//                if( $this->_store($model))
-//                     $this->redirect('index.php?r=view/site');
+               if( $this->_store($model))
+                    $this->redirect('index.php?r=view/site');
             }
             
         }
@@ -122,6 +119,7 @@ class SiteController extends Controller
 	    $this->render('register',array('model'=>$model));
 	    
 	}
+
 	
 	/**
 	 * Store registration user data in database.
