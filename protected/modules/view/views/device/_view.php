@@ -29,8 +29,17 @@
 	<?php echo CHtml::encode($data->key); ?>
 	<br />
 	<b>Last image:</b>
-	<img alt="image png" src="/images/notyetexist.png" 
+<!-- 	<img alt="image png" src="/images/notyetexist.png" 
 		style="border: 1px solid #ddd;border-radius: 4px;padding: 1px;width: 128px;display: block;margin-left: 150px;">
+-->
+	<?php   
+	$src = 'images'.'/'.Media::model()->getLastFlePath($data->id);
+	$alt = 'last image';
+	$htmlOptions = array('style'=>'border: 1px solid #ddd;border-radius: 4px;padding: 1px;width: 128px;display: block;margin-left: 150px;');
+	
+	echo CHTML::image($src,$alt,$htmlOptions) ?>
 	<br />
+	<br />
+	<b><?php echo CHtml::encode(Media::model()->getLastFlePath($data->id));	?></b>
 
 </div>
