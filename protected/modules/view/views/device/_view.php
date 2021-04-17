@@ -28,6 +28,9 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('key')); ?>:</b>
 	<?php echo CHtml::encode($data->key); ?>
 	<br />
-
+	<b>Last image:</b>
+	<img alt="image png" src="/images/notyetexist.png" 
+		style="border: 1px solid #ddd;border-radius: 4px;padding: 1px;width: 128px;display: block;margin-left: 150px;">
+	<br />
 
 </div>

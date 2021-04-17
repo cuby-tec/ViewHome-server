@@ -123,8 +123,11 @@ class DeviceController extends Controller
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Device');
+		$notyetexist_path = "/var/www/upload";
+		$notyetexist_file = "notysetexist.png";
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
+		    'notyestexist_img'=>$notyetexist_path.'/'.$notyetexist_file,
 		));
 	}
 
