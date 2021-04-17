@@ -103,6 +103,17 @@ return array(
         'allowAutoLogin'=>true,
 
     ),
+//-------------
+Yii::app()->clientScript->registerCss('mycss', ' p { color: pink; }');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl . '/css/mycssfile.css');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/myscriptfile.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerScript('myjquery', '
+	$(\'#mybutton\').click(function(){
+		$(\'#mydiv\').slideUp();
+	})
+');
 
+
+//--------------
 
 EOF
