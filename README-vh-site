@@ -19,6 +19,9 @@ http://vh.cuby.net/index.php?r=view/user
 	    $msg = var_export($_POST,true) ;
 	    Yii::log($msg, 'warning');
 	    Yii::getLogger()->flush(true);
+
+
+tail -fn15  /var/www/vh.cuby.net/protected/runtime/application.log
 	    
 //---------------
 page 16 in blog.pdf
