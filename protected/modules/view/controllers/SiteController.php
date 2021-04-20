@@ -37,9 +37,27 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
     
-		$this->render('index');
+	    $this->layout = 'column2';
+		// List
+		
+// 		$dataProvider=new CActiveDataProvider('DeviceStore');
+		$dataProvider = new CActiveDataProvider('DeviceStore',
+		    array(
+		        'criteria'=>array('condition'=>'user=3'),
+		        'pagination'=>array('pageSize'=>5),
+		    )
+// 		    'query' => DeviceStore::find(),
+		    );
+		
+		
+// 	    $this->layout='//layouts/column2';
+// 		$this->render('index');
+		$this->render('index',array(
+		    'dataProvider'=>$dataProvider,
+		));
 // 	    $this->redirect('index.php?r=view/site/login');
 // 	    $this->render('login');
+
 	}
 
 	/**
