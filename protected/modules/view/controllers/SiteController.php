@@ -14,6 +14,36 @@ class SiteController extends Controller
     }
     
     /**
+     * @return array action filters
+     */
+    public function filters()
+    {
+        return array(
+            'accessControl', 
+        );
+    }
+    
+    public function accessRules()
+    {
+        return array(
+            array('allow',
+                'actions'=>array('login'),
+                'users'=>array('*'),
+            ),
+            array('deny',
+                'actions'=>array('login'),
+                'users'=>array('@'),
+            ),
+            array('allow', // allow authenticated users to perform any actions
+                'users'=>array('@'),
+            ),
+            array('deny',
+                'users'=>array('*'),
+            ),
+        );
+    }
+    
+    /**
      * Declares class-based actions.
      */
     public function actions()
@@ -38,12 +68,15 @@ class SiteController extends Controller
 	{
     
 	    $this->layout = 'column2';
+// 	    $session = Yii::app()->getSession();
+	    $user_id = Yii::app()->user->id;
 		// List
 		
 // 		$dataProvider=new CActiveDataProvider('DeviceStore');
 		$dataProvider = new CActiveDataProvider('DeviceStore',
 		    array(
-		        'criteria'=>array('condition'=>'user=3'),
+		        'criteria'=>array('condition'=>'user=:user',
+		        'params'=>array(':user'=>$user_id)),
 		        'pagination'=>array('pageSize'=>5),
 		    )
 // 		    'query' => DeviceStore::find(),
@@ -81,8 +114,8 @@ class SiteController extends Controller
 	public function actionLogin()
 	{
 	    $model=new LoginForm;
-// 	    $redirect = 'index.php?r=view/site';
-	    $redirect = 'index.php?r=view/device';
+	    $redirect = 'index.php?r=view/site';
+// 	    $redirect = 'index.php?r=view/device';
 
 	    // collect user input data
 	    if(isset($_POST['LoginForm']))
